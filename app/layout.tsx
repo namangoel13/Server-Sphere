@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
+import { ThemeProvider } from '@/components/providers/theme-providers'
 const font = Open_Sans({ subsets: ['latin'] })
+import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Server Sphere',
@@ -16,8 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={font.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn(font.className, "bg-white dark:bg-[#313338]"
+        )}>
+        <ThemeProvider 
+        attribute='class' 
+        defaultTheme='dark'
+        enableSystem={false}
+        storageKey='server-sphere-theme'
+        >{children}</ThemeProvider></body>
     </html>
     </ClerkProvider>
   )
